@@ -10,5 +10,5 @@ export default {
             format: 'cjs',
         },
     ],
-    external: ['fs', 'path', 'glob','svgstore'],
+    external: ['fs', 'path', 'glob','cheerio'],
 }
