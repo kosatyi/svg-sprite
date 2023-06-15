@@ -13,10 +13,6 @@
     "dist",
     "index.d.ts"
   ],
-  "exports": {
-    "import": "./dist/mjs/index.mjs",
-    "require": "./dist/cjs/index.cjs"
-  },
   "devDependencies": {
     "rollup": "^3.24.0"
   },

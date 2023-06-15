@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs'
 import {glob} from 'glob'
 import {parse} from 'path'
-import {load} from 'cheerio'
+import {CheerioAPI,load} from 'cheerio'
 
 const template = '<?xml version="1.0" encoding="UTF-8"?><svg></svg>'
 
@@ -29,6 +29,7 @@ class SvgSprite {
         this.rename = rename ?? false
         this.#setup()
     }
+
     #setup(){
         const element = loadXML(template)
         const root = element('svg:eq(0)')
@@ -37,15 +38,18 @@ class SvgSprite {
         this.root = root;
         this.element = element;
     }
+
     add(name, content) {
         const item = loadXML(content)
         const svg = item('svg:eq(0)')
         svg.attr('id',name).removeAttr('width').removeAttr('height')
         this.root.append(svg.get(0))
     }
+
     xml() {
         return this.element.xml()
     }
+
     async bundle() {
         const list = await glob(this.source, {})
         for (let item of list) {
@@ -55,12 +59,14 @@ class SvgSprite {
             this.add(name, content)
         }
     }
+
     async output() {
         const output = this.xml()
         for (let path of this.target) {
             await fs.writeFile(path, output)
         }
     }
+
 }
 
 const svgSprite = async (config) => {
