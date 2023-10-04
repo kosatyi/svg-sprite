@@ -27,16 +27,6 @@ class SvgSprite {
         this.source = toArray(source)
         this.target = toArray(target)
         this.rename = rename ?? false
-        this.#setup()
-    }
-
-    #setup(){
-        const element = loadXML(template)
-        const root = element('svg:eq(0)')
-        root.attr('xmlns','http://www.w3.org/2000/svg')
-        root.attr('xmlns:xlink','http://www.w3.org/1999/xlink')
-        this.root = root;
-        this.element = element;
     }
 
     add(name, content) {
@@ -45,9 +35,18 @@ class SvgSprite {
         svg.attr('id',name).removeAttr('width').removeAttr('height')
         this.root.append(svg.get(0))
     }
-
     xml() {
         return this.element.xml()
+    }
+
+    start(){
+        const element = loadXML(template)
+        const root = element('svg:eq(0)')
+        root.attr('xmlns','http://www.w3.org/2000/svg')
+        root.attr('xmlns:xlink','http://www.w3.org/1999/xlink')
+        this.root = root;
+        this.element = element;
+        return this;
     }
 
     async bundle() {
@@ -80,7 +79,7 @@ const svgRollupSprite = (config) => {
     return {
         name: 'svg-sprite',
         async buildStart() {
-            await sprite.bundle()
+            await sprite.start().bundle()
         },
         async buildEnd() {
             await sprite.output()
