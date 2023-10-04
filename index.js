@@ -70,7 +70,7 @@ class SvgSprite {
 
 const svgSprite = async (config) => {
     const sprite = new SvgSprite(config)
-    await sprite.bundle()
+    await sprite.start().bundle()
     await sprite.output()
 }
 
