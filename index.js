@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs'
 import {glob} from 'glob'
 import {parse} from 'path'
-import {CheerioAPI,load} from 'cheerio'
+import {load} from 'cheerio'
 
 const template = '<?xml version="1.0" encoding="UTF-8"?><svg></svg>'
 
@@ -39,11 +39,12 @@ class SvgSprite {
         return this.element.xml()
     }
 
-    start(){
+    start() {
         const element = loadXML(template)
         const root = element('svg:eq(0)')
-        root.attr('xmlns','http://www.w3.org/2000/svg')
-        root.attr('xmlns:xlink','http://www.w3.org/1999/xlink')
+        root.attr('xmlns', 'http://www.w3.org/2000/svg')
+        root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+        root.append('<style>:root>svg{display:none}:root>svg:target{display:block}</style>')
         this.root = root;
         this.element = element;
         return this;
