@@ -63,6 +63,7 @@ class SvgSprite {
     async output() {
         const output = this.xml()
         for (let path of this.target) {
+            await fs.mkdir(parse(path).dir, {recursive: true})
             await fs.writeFile(path, output)
         }
     }
