@@ -2,22 +2,26 @@
   "name": "@kosatyi/svg-sprite",
   "version": "1.0.7",
   "type": "module",
+  "types": "types.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
   "source": "index.js",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "glob": "^10.2.7"
+    "cheerio": "^1.0.0",
+    "glob": "^11.0.2"
   },
   "files": [
     "dist",
-    "index.d.ts"
+    "types.d.ts"
   ],
   "devDependencies": {
-    "rollup": "^3.24.0"
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/node": "^22.15.18",
+    "rollup": "4.22.4",
+    "tslib": "^2.8.1"
   },
   "peerDependencies": {
-    "rollup": "^2.x || ^3.x || ^4.x"
+    "rollup": "4.22.4"
   },
   "peerDependenciesMeta": {
     "rollup": {
@@ -28,10 +32,10 @@
     "type": "git",
     "url": "git://github.com/kosatyi/svg-sprite.git"
   },
-  "types": "index.d.ts",
   "description": "@kosatyi/svg-sprite",
   "scripts": {
     "build": "rm -rf dist && rollup -c",
+    "watch": "rollup -c -w",
     "prepublishOnly": "npm run build",
     "version": "npm run build",
     "postversion": "git push && git push --tags"

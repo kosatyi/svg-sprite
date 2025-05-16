@@ -1,5 +1,7 @@
+import typescript from "@rollup/plugin-typescript";
+
 export default {
-    input: 'index.js',
+    input: 'index.ts',
     output: [
         {
             file: 'dist/esm/index.mjs',
@@ -11,4 +13,5 @@ export default {
         },
     ],
     external: ['fs', 'path', 'glob','cheerio'],
+    plugins: [typescript()],
 }
