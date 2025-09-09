@@ -1,6 +1,6 @@
 {
   "name": "@kosatyi/svg-sprite",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "types": "types.d.ts",
   "main": "dist/cjs/index.cjs",
