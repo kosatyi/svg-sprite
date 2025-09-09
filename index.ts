@@ -35,14 +35,12 @@ class SvgSprite {
     private item: Cheerio<AnyNode>;
     private jsonMap: Map<string, string[]>;
 
-
     constructor({source, target, rename, json}: SvgSpriteConfig) {
         this.source = toArray(source)
         this.target = toArray(target)
         this.json = toArray(json)
         this.item = loadXML('<g></g>')('g:eq(0)')
         this.rename = rename
-        this.jsonMap = new Map()
         this.element = loadXML(template)
         this.root = this.element('svg:eq(0)')
         this.defs = this.element('defs:eq(0)')
@@ -64,6 +62,7 @@ class SvgSprite {
     }
 
     start() {
+        this.jsonMap = new Map()
         this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
         this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
         return this;
