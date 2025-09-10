@@ -45,6 +45,8 @@ class SvgSprite {
         this.root = this.element('svg:eq(0)')
         this.defs = this.element('defs:eq(0)')
         this.list = new Map()
+        this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
+        this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
     }
 
     add(name: string, content: string) {
@@ -63,11 +65,8 @@ class SvgSprite {
     }
 
     start() {
-        this.root = this.element('svg:eq(0)')
         this.defs.empty()
         this.list.clear()
-        this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
-        this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
         return this;
     }
 
