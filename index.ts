@@ -33,17 +33,18 @@ class SvgSprite {
     private root: Cheerio<AnyNode>;
     private defs: Cheerio<AnyNode>;
     private item: Cheerio<AnyNode>;
-    private jsonMap: Map<string, string[]>;
+    private list: Map<string, string[]>;
 
     constructor({source, target, rename, json}: SvgSpriteConfig) {
         this.source = toArray(source)
         this.target = toArray(target)
         this.json = toArray(json)
-        this.item = loadXML('<g></g>')('g:eq(0)')
         this.rename = rename
         this.element = loadXML(template)
+        this.item = loadXML('<g></g>')('g:eq(0)')
         this.root = this.element('svg:eq(0)')
         this.defs = this.element('defs:eq(0)')
+        this.list = new Map()
     }
 
     add(name: string, content: string) {
@@ -51,7 +52,7 @@ class SvgSprite {
         const group = this.item.clone()
         const viewBox = svg.attr('viewBox')
         svg.each((_, el) => { el.attribs = {viewBox} });
-        this.jsonMap.set(name, [viewBox, svg.html()])
+        this.list.set(name, [viewBox, svg.html()])
         group.attr('id', name)
         group.append(svg)
         this.defs.append(group)
@@ -62,7 +63,9 @@ class SvgSprite {
     }
 
     start() {
-        this.jsonMap = new Map()
+        this.root = this.element('svg:eq(0)')
+        this.defs.empty()
+        this.list.clear()
         this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
         this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
         return this;
@@ -81,7 +84,7 @@ class SvgSprite {
         const output = this.xml()
         for (let path of this.json) {
             await fs.mkdir(parse(path).dir, {recursive: true})
-            await fs.writeFile(path, JSON.stringify(Object.fromEntries(this.jsonMap)))
+            await fs.writeFile(path, JSON.stringify(Object.fromEntries(this.list)))
         }
         for (let path of this.target) {
             await fs.mkdir(parse(path).dir, {recursive: true})
