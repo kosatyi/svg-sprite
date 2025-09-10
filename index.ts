@@ -33,7 +33,7 @@ class SvgSprite {
     private root: Cheerio<AnyNode>;
     private defs: Cheerio<AnyNode>;
     private item: Cheerio<AnyNode>;
-    private list: Map<string, string[]>;
+    private readonly list: Map<string, string[]>;
 
     constructor({source, target, rename, json}: SvgSpriteConfig) {
         this.source = toArray(source)
