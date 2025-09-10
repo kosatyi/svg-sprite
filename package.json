@@ -8,7 +8,7 @@
   "source": "index.js",
   "dependencies": {
     "cheerio": "^1.0.0",
-    "glob": "^11.0.2"
+    "glob": "^11.0.3"
   },
   "files": [
     "dist",
