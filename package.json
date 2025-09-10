@@ -12,6 +12,7 @@
   },
   "files": [
     "dist",
+    "rollup.config.js",
     "types.d.ts"
   ],
   "devDependencies": {
