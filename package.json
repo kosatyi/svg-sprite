@@ -13,6 +13,7 @@
   "files": [
     "dist",
     "rollup.config.js",
+    "index.ts",
     "types.d.ts"
   ],
   "devDependencies": {
