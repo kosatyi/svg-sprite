@@ -38,6 +38,7 @@
     "watch": "rollup -c -w",
     "prepublishOnly": "npm run build",
     "version": "npm run build",
+    "install": "npm run build",
     "postversion": "git push && git push --tags"
   },
   "author": "Stepan Kosatyi",
