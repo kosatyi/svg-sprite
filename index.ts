@@ -53,7 +53,7 @@ class SvgSprite {
         const svg = loadXML(content)('svg:eq(0)')
         const group = this.item.clone()
         const viewBox = svg.attr('viewBox')
-        svg.each((_, el) => { el.attribs = {viewBox} });
+        //svg.each((_, el) => { el.attribs = {viewBox} });
         this.list.set(name, [viewBox, svg.html()])
         group.attr('id', name)
         group.append(svg)
