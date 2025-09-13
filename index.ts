@@ -33,7 +33,7 @@ class SvgSprite {
     private root: Cheerio<AnyNode>;
     private defs: Cheerio<AnyNode>;
     private item: Cheerio<AnyNode>;
-    private readonly list: Map<string, string[]>;
+    private readonly list: Map<string, [Record<string,string>, string]>;
 
     constructor({source, target, rename, json}: SvgSpriteConfig) {
         this.source = toArray(source)
@@ -52,9 +52,7 @@ class SvgSprite {
     add(name: string, content: string) {
         const svg = loadXML(content)('svg:eq(0)')
         const group = this.item.clone()
-        const viewBox = svg.attr('viewBox')
-        //svg.each((_, el) => { el.attribs = {viewBox} });
-        this.list.set(name, [viewBox, svg.html()])
+        this.list.set(name, [svg.attr(), svg.html()])
         group.attr('id', name)
         group.append(svg)
         this.defs.append(group)
