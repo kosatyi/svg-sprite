@@ -48,7 +48,6 @@ class SvgSprite {
         this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
         this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
     }
-
     add(name: string, content: string) {
         const svg = loadXML(content)('svg:eq(0)')
         const group = this.item.clone()
@@ -57,17 +56,14 @@ class SvgSprite {
         group.append(svg)
         this.defs.append(group)
     }
-
     xml() {
         return this.element.xml()
     }
-
     start() {
         this.defs.empty()
         this.list.clear()
         return this;
     }
-
     async bundle() {
         const list = await glob(this.source, {})
         for (let item of list) {
