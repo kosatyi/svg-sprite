@@ -5,10 +5,16 @@
   "types": "types.d.ts",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
-  "source": "index.js",
+  "source": "index.ts",
   "dependencies": {
     "cheerio": "^1.0.0",
     "glob": "^11.0.3"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+    }
   },
   "files": [
     "dist",
