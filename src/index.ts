@@ -1,10 +1,28 @@
-import {promises as fs} from 'fs'
-import {glob} from 'glob'
-import {parse} from 'path'
-import {Cheerio, CheerioAPI, load} from 'cheerio'
 import type {Plugin} from 'rollup'
+
+import fs from 'node:fs/promises'
+import {glob} from 'glob'
+import {parse} from 'node:path'
+import {Cheerio, CheerioAPI, load} from 'cheerio'
 import type {AnyNode} from "domhandler";
-import {RenameCallback, SvgSpriteConfig} from './types'
+
+
+export interface FileParseInfo {
+    name: string
+    dir: string
+}
+
+export interface RenameCallback {
+    (info: FileParseInfo): string
+}
+
+export interface SvgSpriteConfig {
+    source: string[] | string
+    target: string[] | string
+    json?: string[] | string | false
+    rename?: RenameCallback
+}
+
 
 const template = '<?xml version="1.0" encoding="UTF-8"?><svg><defs></defs></svg>'
 
@@ -39,19 +57,19 @@ class SvgSprite {
         this.source = toArray(source)
         this.target = toArray(target)
         this.json = toArray(json)
-        this.rename = rename
+        this.rename = rename as RenameCallback
         this.element = loadXML(template)
         this.item = loadXML('<g></g>')('g:eq(0)')
         this.root = this.element('svg:eq(0)')
         this.defs = this.element('defs:eq(0)')
-        this.list = new Map()
+        this.list = new Map<string,[Record<string, any>, string]>()
         this.root.attr('xmlns', 'http://www.w3.org/2000/svg')
         this.root.attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
     }
     add(name: string, content: string) {
         const svg = loadXML(content)('svg:eq(0)')
         const group = this.item.clone()
-        this.list.set(name, [svg.attr(), svg.html()])
+        this.list.set(name, [svg.attr() as Record<string, any>, svg.html() as string])
         group.attr('id', name)
         group.append(svg)
         this.defs.append(group)
